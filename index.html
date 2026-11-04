@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f3d2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Алфавит">
+<meta property="og:title" content="Арабский алфавит — тренажёр">
+<meta property="og:description" content="Учим названия арабских букв: 4 этапа, карта букв и прогресс.">
+<title>Арабский алфавит — тренажёр</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g9:#0b3024;--g8:#0f3d2e;--g7:#185440;--g6:#21694f;--g5:#2f7d5c;--g2:#d6e9dc;--g1:#e9f4ec;
+  --cream:#f8f1e3;--cream2:#fbf6ec;--paper:#fffdf8;
+  --gold:#c49a3e;--gold2:#e0c070;--gold3:#f5e6bb;
+  --peach:#f3c6a5;--peach2:#fdeee2;--peachd:#a9592b;
+  --light:#efe9dc;--ink:#1f2a24;--muted:#6d7a71;--line:#eadfc8;
+  --sh:0 6px 22px rgba(15,61,46,.09);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{
+  font-family:'Nunito',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  color:var(--ink);font-size:16px;line-height:1.45;
+  background-color:var(--cream);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'%3E%3Cg fill='none' stroke='%23c49a3e' stroke-opacity='0.16' stroke-width='1'%3E%3Crect x='24' y='24' width='36' height='36'/%3E%3Crect x='24' y='24' width='36' height='36' transform='rotate(45 42 42)'/%3E%3Ccircle cx='42' cy='42' r='7'/%3E%3Cpath d='M0 0L17 17M84 0L67 17M0 84L17 67M84 84L67 67'/%3E%3C/g%3E%3C/svg%3E");
+  min-height:100vh;
+}
+button{font:inherit;color:inherit}
+.ar{font-family:'Amiri','Noto Naskh Arabic','Geeza Pro','Traditional Arabic','Arial',serif;direction:rtl;unicode-bidi:isolate;font-weight:400}
+.ar.hz{display:inline-block;transform:scale(1.45);transform-origin:center}
+#app{max-width:480px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 14px) 16px calc(100px + env(safe-area-inset-bottom))}
+body.in-session #app{padding-bottom:calc(30px + env(safe-area-inset-bottom))}
+.screen{animation:up .38s ease both}
+.screen.noanim{animation:none}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+h1,h2,h3{font-family:'Lora',Georgia,serif;color:var(--g8);margin:0}
+h1{font-size:28px;line-height:1.15}
+h2{font-size:22px;margin:22px 0 12px}
+h3{font-size:18px}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:22px;box-shadow:var(--sh);padding:16px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;border-radius:16px;padding:14px 18px;font-weight:800;font-size:16px;cursor:pointer;text-decoration:none;transition:transform .12s ease,filter .12s}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:linear-gradient(180deg,var(--g6),var(--g8));color:#fff;box-shadow:0 6px 16px rgba(15,61,46,.25),inset 0 0 0 1px rgba(224,192,112,.35)}
+.btn.gold{background:linear-gradient(180deg,#e6c97c,var(--gold));color:var(--g9);box-shadow:0 6px 16px rgba(196,154,62,.3)}
+.btn.ghost{background:var(--paper);color:var(--g7);border:1.5px solid var(--line)}
+.btn.wa{background:linear-gradient(180deg,#2fbf6a,#1e9e55);color:#fff;box-shadow:0 6px 16px rgba(30,158,85,.3)}
+.btn.danger{background:transparent;color:var(--peachd);border:1.5px dashed var(--peach)}
+.btn[disabled]{opacity:.5;pointer-events:none}
+.row{display:flex;gap:10px}
+.row>*{flex:1}
+.stack>*+*{margin-top:10px}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:20px 18px 18px;color:#fff;
+  background:radial-gradient(120% 90% at 85% 0%,#2a7a59 0%,var(--g8) 55%,var(--g9) 100%);box-shadow:0 10px 30px rgba(11,48,36,.28)}
+.hero h1{color:#fff}
+.hero .hello{color:var(--gold2);font-weight:700;font-size:14px;letter-spacing:.3px}
+.hero .orn{position:absolute;right:-30px;top:-30px;width:170px;height:170px;opacity:.22}
+.hero .sub{opacity:.85;font-size:14px;margin-top:4px}
+.hero-row{display:flex;align-items:center;gap:14px;margin-top:16px}
+.ring{position:relative;width:92px;height:92px;flex:none}
+.ring svg{width:92px;height:92px;transform:rotate(-90deg)}
+.ring .rt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;font-size:20px;line-height:1}
+.ring .rt small{font-size:11px;font-weight:600;opacity:.8;margin-top:3px}
+.chips{display:flex;flex-direction:column;gap:7px;flex:1}
+.chip{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(224,192,112,.25);border-radius:12px;padding:7px 10px;font-size:14px;font-weight:700}
+.chip b{color:var(--gold2)}
+
+/* Daily */
+.daily{display:flex;align-items:center;gap:12px;margin-top:14px;background:linear-gradient(135deg,#fff8e6,#fdf0d2);border:1px solid #efd9a0}
+.daily .ic{font-size:30px}
+.daily .t{flex:1}
+.daily .t b{display:block;color:var(--g8)}
+.daily button{width:auto;padding:10px 14px;font-size:14px}
+
+/* Stage path */
+.path{position:relative;margin-top:6px}
+.stage{position:relative;display:flex;gap:14px;align-items:stretch;margin-bottom:14px}
+.stage .num{flex:none;width:48px;display:flex;flex-direction:column;align-items:center}
+.stage .num i{display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;font-style:normal;font-weight:800;font-size:18px;background:var(--light);color:var(--muted);border:2px solid var(--line)}
+.stage .num:after{content:"";flex:1;width:3px;margin-top:6px;border-radius:3px;background:repeating-linear-gradient(var(--gold2) 0 6px,transparent 6px 11px);opacity:.7}
+.stage:last-child .num:after{display:none}
+.stage.done .num i{background:var(--g6);color:#fff;border-color:var(--gold2)}
+.stage.current .num i{background:linear-gradient(180deg,#e6c97c,var(--gold));color:var(--g9);border-color:#fff;box-shadow:0 0 0 4px rgba(196,154,62,.25);animation:glow 2.4s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 0 9px rgba(196,154,62,.08)}}
+.stage .card{flex:1;padding:14px}
+.stage.locked .card{opacity:.6;background:var(--cream2)}
+.stage .st-k{font-size:12px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.6px}
+.stage h3{margin:2px 0 4px}
+.stage p{margin:0 0 10px;font-size:14px;color:var(--muted)}
+.stage .meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:800;padding:4px 9px;border-radius:999px;background:var(--g1);color:var(--g7)}
+.pill.peach{background:var(--peach2);color:var(--peachd)}
+.pill.light{background:var(--light);color:var(--muted)}
+.pill.gold{background:var(--gold3);color:#7a5a12}
+.stage .btn{padding:11px 14px;font-size:15px}
+
+/* Tabbar */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(255,253,248,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:6px 10px calc(6px + env(safe-area-inset-bottom))}
+.tabbar .in{max-width:480px;margin:0 auto;display:flex}
+.tab{flex:1;border:0;background:none;padding:6px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer}
+.tab .ti{font-size:21px;line-height:1.2;filter:grayscale(.6);opacity:.75}
+.tab.on{color:var(--g7)}
+.tab.on .ti{filter:none;opacity:1}
+body.in-session .tabbar{display:none}
+
+/* Session */
+.s-top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.icon-btn{flex:none;width:40px;height:40px;border-radius:50%;border:1.5px solid var(--line);background:var(--paper);font-size:18px;cursor:pointer;color:var(--muted)}
+.bar{flex:1;height:12px;border-radius:99px;background:var(--light);overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--g5),var(--gold2));transition:width .45s ease}
+.s-stars{flex:none;font-weight:800;color:#8a6516;background:var(--gold3);border-radius:999px;padding:6px 10px;font-size:14px}
+.s-title{font-size:13px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin:6px 2px 10px}
+.q-card{position:relative;text-align:center;padding:16px 14px 10px;border-radius:26px;background:var(--paper);border:1px solid var(--line);box-shadow:var(--sh);overflow:hidden}
+.q-card:before{content:"";position:absolute;inset:8px;border-radius:20px;border:1px solid rgba(196,154,62,.28);pointer-events:none}
+.q-tag{display:inline-block;margin-bottom:6px}
+.q-prompt{font-weight:800;font-size:18px;color:var(--g8)}
+.q-display{position:relative;display:flex;align-items:center;justify-content:center;min-height:170px}
+.q-display .disc{position:absolute;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,#fff6dc 0%,rgba(245,230,187,.55) 55%,rgba(245,230,187,0) 72%)}
+.q-display .big{position:relative;font-size:118px;line-height:1.35;color:var(--g8)}
+.q-display .nm{position:relative;font-family:'Lora',serif;font-size:42px;font-weight:700;color:var(--g8)}
+.q-display.pair{gap:26px}
+.q-display.pair .cell{position:relative;display:flex;flex-direction:column;align-items:center}
+.q-display.pair .cell .ar{position:relative;z-index:1;font-size:92px;line-height:1.35;color:var(--g8)}
+.q-display.pair .cell.other .ar{color:#9aa79e;font-size:72px}
+.q-display.pair .cell.this:before{content:"";position:absolute;top:8px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,#fff3cf 0%,rgba(245,230,187,0) 70%)}
+.q-display.pair .lbl{font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.q-display.pair .cell.this .lbl{color:var(--gold)}
+.lvl{position:absolute;top:14px;right:16px;font-size:11px;font-weight:800;color:var(--gold)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.opts.three{grid-template-columns:1fr 1fr 1fr}
+.opts.one{grid-template-columns:1fr}
+.opt{position:relative;min-height:64px;border-radius:18px;border:2px solid var(--line);background:var(--paper);font-weight:800;font-size:20px;color:var(--g8);cursor:pointer;padding:8px;box-shadow:0 3px 0 var(--line);transition:background .2s,border-color .2s,transform .1s}
+.opt:active{transform:translateY(2px);box-shadow:0 1px 0 var(--line)}
+.opt.txt{font-size:15px;line-height:1.25}
+.opt .ar{font-size:44px;line-height:1.3}
+.opt.ok{background:#e3f3e7;border-color:#5fae80;box-shadow:0 3px 0 #b8dcc4;animation:pop .45s ease}
+.opt.bad{background:var(--peach2);border-color:var(--peach);box-shadow:0 3px 0 #f2d3bd}
+.opt.dim{opacity:.5}
+.opt[disabled]{cursor:default}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.06)}100%{transform:scale(1)}}
+.fb{margin-top:14px;border-radius:20px;padding:14px 16px;animation:up .3s ease both}
+.fb.ok{background:linear-gradient(135deg,#e8f5ec,#f3faf5);border:1px solid #bfe0ca}
+.fb.soft{background:linear-gradient(135deg,#fff2e7,#fff8f1);border:1px solid #f4d5bd}
+.fb h3{font-size:19px;margin-bottom:4px}
+.fb.soft h3{color:var(--peachd)}
+.fb p{margin:4px 0}
+.fb .ar{font-size:30px;line-height:1;vertical-align:middle;color:var(--g8)}
+.say{display:block;margin:10px 0 12px;padding:9px 12px;border-radius:14px;background:rgba(255,255,255,.75);border:1px dashed var(--gold2);font-weight:700;font-size:15px;color:var(--g7)}
+.say b{white-space:nowrap}
+.badge-hard{display:inline-block;margin-top:4px;font-size:13px;font-weight:800;color:#7a5a12;background:var(--gold3);padding:3px 9px;border-radius:999px}
+
+/* intro / compare */
+.intro{text-align:center;padding:20px 16px}
+.intro .k{font-size:12px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.6px}
+.intro .glyph{position:relative;display:flex;justify-content:center;align-items:center;height:210px}
+.intro .glyph .disc{position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,#fff3cf 0%,rgba(245,230,187,.5) 55%,rgba(245,230,187,0) 72%)}
+.intro .glyph .ring8{position:absolute;width:196px;height:196px;opacity:.35;animation:spin 40s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.intro .glyph .ar{position:relative;font-size:140px;line-height:1.35;color:var(--g8)}
+.intro .name{font-family:'Lora',serif;font-size:40px;font-weight:700;color:var(--g8);margin-top:-6px}
+.intro .hint{margin:8px auto 0;max-width:320px;color:var(--muted)}
+.cmp{display:flex;justify-content:center;gap:10px;flex-direction:row-reverse;margin:12px 0}
+.cmp .c{flex:1;max-width:120px;background:var(--cream2);border:1px solid var(--line);border-radius:18px;padding:6px 6px 10px;text-align:center}
+.cmp .c .ar{font-size:64px;line-height:1.45;color:var(--g8);display:block}
+.cmp .c b{display:block;font-family:'Lora',serif;font-size:19px;color:var(--g8)}
+.cmp .c span.d{display:block;font-size:12px;color:var(--muted);font-weight:700;margin-top:2px}
+
+/* finish */
+.art{display:block;width:100%;height:auto;border-radius:24px;box-shadow:0 10px 28px rgba(11,48,36,.25)}
+.finish{text-align:center}
+.finish h1{margin:18px 0 8px}
+.motiv{font-family:'Lora',serif;font-size:18px;line-height:1.5;color:var(--g7);margin:0 6px 16px;font-style:italic}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
+.stats.two{grid-template-columns:1fr 1fr}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:10px 4px;text-align:center}
+.stat b{display:block;font-size:22px;color:var(--g8);font-family:'Lora',serif}
+.stat span{font-size:11px;font-weight:700;color:var(--muted)}
+.chips2{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.lchip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 8px;border-radius:999px;font-weight:800;font-size:14px;background:var(--g1);color:var(--g7);border:1px solid #cfe5d6}
+.lchip .ar{font-size:22px;line-height:1.2}
+.lchip.peach{background:var(--peach2);color:var(--peachd);border-color:#f6d9c3}
+.lchip.light{background:var(--light);color:var(--muted);border-color:var(--line)}
+.sec{text-align:left;margin-top:12px}
+.sec h3{margin-bottom:8px}
+.sec .chips2{justify-content:flex-start}
+
+/* map */
+.legend{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.tile{position:relative;border:1.5px solid var(--line);border-radius:16px;padding:4px 2px 7px;background:var(--light);cursor:pointer;text-align:center;transition:transform .12s}
+.tile:active{transform:scale(.96)}
+.tile .ar{display:block;font-size:40px;line-height:1.5;color:var(--g8)}
+.tile b{display:block;font-size:13.5px;color:var(--g8);line-height:1.15}
+.tile i{display:block;font-style:normal;font-size:10.5px;font-weight:800;margin-top:2px;color:var(--muted)}
+.tile.st-learned{background:linear-gradient(180deg,#e2f2e7,#d2eadb);border-color:#9fd0b0}
+.tile.st-learned i{color:var(--g6)}
+.tile.st-review{background:linear-gradient(180deg,#fff0e4,#fde3d0);border-color:#f2c3a2}
+.tile.st-review i{color:var(--peachd)}
+.tile .medal{position:absolute;top:3px;right:5px;font-size:11px}
+.dist{display:flex;height:14px;border-radius:99px;overflow:hidden;background:var(--light);border:1px solid var(--line);margin:8px 0}
+.dist i{display:block;height:100%}
+
+/* progress */
+.ach{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.ach .a{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:10px 6px;text-align:center}
+.ach .a .e{font-size:26px;line-height:1.2}
+.ach .a b{display:block;font-size:12.5px;color:var(--g8);line-height:1.2;margin-top:3px}
+.ach .a span{display:block;font-size:10.5px;color:var(--muted);line-height:1.2;margin-top:2px}
+.ach .a.off{opacity:.45;filter:grayscale(1)}
+.hist{list-style:none;margin:0;padding:0}
+.hist li{display:flex;align-items:center;gap:10px;padding:10px 2px;border-bottom:1px dashed var(--line)}
+.hist li:last-child{border-bottom:0}
+.hist .d{font-size:12px;color:var(--muted);min-width:78px}
+.hist .t{flex:1;font-weight:700;font-size:14px;line-height:1.25}
+.hist .r{font-weight:800;color:var(--g7);font-size:14px;text-align:right}
+pre.report{white-space:pre-wrap;font-family:inherit;font-size:14px;background:var(--cream2);border:1px solid var(--line);border-radius:16px;padding:12px;margin:0 0 12px;max-height:280px;overflow:auto}
+textarea{width:100%;min-height:90px;border-radius:14px;border:1.5px solid var(--line);background:var(--cream2);padding:10px;font:13px/1.4 ui-monospace,Menlo,monospace;color:var(--ink);resize:vertical}
+.file-lbl{position:relative;overflow:hidden}
+.file-lbl input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.warn{background:var(--peach2);border:1px solid var(--peach);color:var(--peachd);border-radius:14px;padding:10px 12px;font-size:14px;font-weight:700;margin-bottom:12px}
+.note{font-size:13px;color:var(--muted);margin:8px 2px 0}
+
+/* modal & toast */
+.modal-bg{position:fixed;inset:0;z-index:50;background:rgba(11,48,36,.45);display:flex;align-items:flex-end;justify-content:center;animation:fade .2s ease}
+@keyframes fade{from{opacity:0}}
+.sheet{width:100%;max-width:480px;background:var(--paper);border-radius:26px 26px 0 0;padding:20px 18px calc(18px + env(safe-area-inset-bottom));animation:slide .3s ease;max-height:90vh;overflow:auto}
+@keyframes slide{from{transform:translateY(40px);opacity:.4}}
+.sheet h3{margin-bottom:6px}
+.sheet p{margin:6px 0 14px;color:var(--muted)}
+.toast{position:fixed;z-index:60;left:50%;top:calc(env(safe-area-inset-top) + 14px);transform:translateX(-50%);max-width:92vw;width:360px;background:var(--g8);color:#fff;border:1px solid var(--gold2);border-radius:18px;padding:12px 14px;display:flex;gap:10px;align-items:center;box-shadow:0 12px 30px rgba(0,0,0,.25);animation:tin .35s ease both}
+.toast .e{font-size:28px}
+.toast b{color:var(--gold2);display:block;font-size:13px;text-transform:uppercase;letter-spacing:.5px}
+@keyframes tin{from{opacity:0;transform:translate(-50%,-14px)}}
+.spark{position:fixed;z-index:70;pointer-events:none;color:var(--gold);font-size:15px;animation:spark .85s ease-out forwards;text-shadow:0 0 6px rgba(224,192,112,.8)}
+@keyframes spark{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.4) rotate(90deg)}}
+.tw{animation:tw 3s ease-in-out infinite}
+@keyframes tw{50%{opacity:.25}}
+.rays{transform-origin:160px 110px;animation:spin 60s linear infinite}
+.sway{transform-origin:160px 175px;animation:sway 5s ease-in-out infinite}
+@keyframes sway{50%{transform:rotate(2.5deg)}}
+.float{animation:float 4s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-6px)}}
+@media (max-width:350px){
+  .q-display .big{font-size:100px}
+  .grid{gap:6px}
+  .tile .ar{font-size:34px}
+  .opt{font-size:18px}
+  .stats{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<nav class="tabbar" id="tabbar"><div class="in">
+  <button class="tab" data-act="tab" data-tab="home"><span class="ti">🕌</span>Путь</button>
+  <button class="tab" data-act="tab" data-tab="map"><span class="ti">🗺️</span>Моя карта букв</button>
+  <button class="tab" data-act="tab" data-tab="progress"><span class="ti">🌿</span>Прогресс</button>
+</div></nav>
+<div id="modal"></div>
+<div id="toast"></div>
+<script>
+(function(){
+'use strict';
+
+/* ================== ДАННЫЕ ================== */
+// Названия — строго по заданию, без изменений.
+const RAW = [
+ ['ا','Алиф','Простая вертикальная черта — без точек.',0,''],
+ ['ب','Ба','Лодочка с одной точкой снизу.',1,'down'],
+ ['ت','Та','Лодочка с двумя точками сверху.',2,'up'],
+ ['ث','Са','Лодочка с тремя точками сверху.',3,'up'],
+ ['ج','Джим','Крючок с точкой внутри, снизу.',1,'down'],
+ ['ح','Хьа','Такой же крючок, как у «Джим», но совсем без точки.',0,''],
+ ['خ','Хо','Крючок с точкой сверху.',1,'up'],
+ ['د','Даль','Небольшой уголок — без точки.',0,''],
+ ['ذ','Заль','Уголок с точкой сверху.',1,'up'],
+ ['ر','Ра','Маленькая дуга, уходящая вниз, — без точки.',0,''],
+ ['ز','За','Дуга, уходящая вниз, с точкой сверху.',1,'up'],
+ ['س','Син','Три зубчика и чаша — без точек.',0,''],
+ ['ش','Щин','Три зубчика и три точки сверху.',3,'up'],
+ ['ص','Сод','Овальная петля и чаша — без точки.',0,''],
+ ['ض','Д’од','Овальная петля с чашей и точкой сверху.',1,'up'],
+ ['ط','Тло','Овал с высокой палочкой — без точки.',0,''],
+ ['ظ','Зо','Овал с высокой палочкой и точкой сверху.',1,'up'],
+ ['ع','|Айн','Открытый полукруг сверху и чаша снизу — без точки.',0,''],
+ ['غ','Г|ойн','Как |Айн, но с точкой сверху.',1,'up'],
+ ['ف','Фа','Кружок с одной точкой сверху.',1,'up'],
+ ['ق','Къоф','Кружок с глубокой чашей и двумя точками сверху.',2,'up'],
+ ['ك','Каф','Высокая буква с маленьким значком внутри.',0,''],
+ ['ل','Лям','Высокая палочка с крючком внизу.',0,''],
+ ['م','Мим','Маленький кружок с хвостиком вниз.',0,''],
+ ['ن','Нун','Глубокая чаша с одной точкой сверху.',1,'up'],
+ ['ه','Хл’а','Округлая буква, похожая на петельку.',0,''],
+ ['و','Вав','Кружок с хвостиком — похожа на запятую.',0,''],
+ ['ء','Хамза','Маленький значок, похожий на «с» с хвостиком.',0,''],
+ ['ي','Йа','Изгиб с двумя точками снизу.',2,'down']
+];
+const LETTERS = RAW.map((r,i)=>({ch:r[0],name:r[1],hint:r[2],dots:r[3],pos:r[4],i}));
+const BY = {}; LETTERS.forEach(l=>BY[l.ch]=l);
+const ALL = LETTERS.map(l=>l.ch);
+const KNOWN = ['ا','ب','ت','ث','ن','ء','ع','غ'];
+const NEW = ALL.filter(c=>!KNOWN.includes(c));
+const GROUPS = [NEW.slice(0,5), NEW.slice(5,11), NEW.slice(11,16), NEW.slice(16)];
+const TWINS = [['ب','ت','ث'],['ج','ح','خ'],['د','ذ'],['ر','ز'],['س','ش'],['ص','ض'],['ط','ظ']];
+const SIMILAR = [['ب','ت','ث','ن','ي'],['ج','ح','خ'],['د','ذ','ر','ز'],['ر','ز','و'],['س','ش'],['ص','ض'],['ط','ظ'],['ع','غ','ء'],['ف','ق'],['ا','ل','ك'],['م','ه','و']];
+const HARD = new Set(['ث','ح','خ','ذ','ز','ش','ض','ط','ظ','ع','غ','ق','ه','ء']);
+
+const STAGES = [
+ {n:1,title:'Укрепляем знакомые буквы',desc:'Восемь букв, которые ты уже знаешь. Закрепим их названия.',
+  motiv:'Ты уже сделала первый шаг! Знакомые буквы становятся всё ближе и понятнее. Продолжай — у тебя прекрасно получается.',art:'book'},
+ {n:2,title:'Открываем новые буквы',desc:'21 новая буква — четырьмя небольшими группами, с мини-тестами.',
+  motiv:'Сегодня ты открыла для себя новые буквы. Каждая из них — ещё один шаг к чтению на арабском языке. Не останавливайся!',art:'sprout'},
+ {n:3,title:'Буквы-двойники',desc:'Похожие буквы, которые отличаются точками. Учимся различать.',
+  motiv:'Ты научилась замечать тонкие различия. Внимательность — важная часть обучения. С каждым упражнением твои знания становятся крепче.',art:'sky'},
+ {n:4,title:'Большое испытание',desc:'Итоговый тест по всем 29 буквам. Сложность растёт постепенно.',
+  motiv:'Посмотри, какой путь ты прошла! Когда-то эти буквы были незнакомыми, а теперь многие из них стали частью твоих знаний. Продолжай с искренним намерением и терпением.',art:'star'}
+];
+const PRACTICE_MOTIV = [
+ 'Каждое повторение делает знание крепче. Маленькие шаги каждый день — и буквы останутся с тобой надолго.',
+ 'Терпение и постоянство — лучшие помощники в учёбе. Ты молодец, что вернулась к повторению!',
+ 'Знание растёт, как дерево: тихо, но верно. Сегодня оно стало немного выше.',
+ 'Спокойно, без спешки — и с каждым разом всё увереннее. Так держать!'
+];
+const PRAISE = ['Верно!','Отлично!','Молодец!','Прекрасно!','Так держать!','Ма шаа Аллах!','Чудесно!','Именно так!','Умница!'];
+const SOFT = ['Почти получилось','Ничего страшного','Хорошая попытка','Давай запомним','Это непростая буква'];
+
+const ACH = [
+ {id:'s1',e:'📖',t:'Первый шаг',d:'Пройден этап 1',f:s=>s.stagesDone[0]},
+ {id:'s2',e:'🌱',t:'Новые буквы',d:'Пройден этап 2',f:s=>s.stagesDone[1]},
+ {id:'s3',e:'🔍',t:'Зоркий глаз',d:'Пройден этап 3',f:s=>s.stagesDone[2]},
+ {id:'s4',e:'🌟',t:'Большое испытание',d:'Пройден этап 4',f:s=>s.stagesDone[3]},
+ {id:'perfect',e:'💎',t:'Без ошибок',d:'Занятие на 100%',f:s=>s.counters.perfect>0},
+ {id:'streak10',e:'✨',t:'Десять подряд',d:'10 верных ответов подряд',f:s=>s.counters.bestStreak>=10},
+ {id:'comeback',e:'🏅',t:'Работа над ошибками',d:'5 трудных букв исправлены',f:s=>s.counters.comeback>=5},
+ {id:'stars50',e:'⭐',t:'50 звёзд',d:'Собрано 50 звёзд',f:s=>s.stars>=50},
+ {id:'stars200',e:'🌠',t:'200 звёзд',d:'Собрано 200 звёзд',f:s=>s.stars>=200},
+ {id:'half',e:'🌙',t:'Половина пути',d:'15 букв выучено',f:()=>countStatus('learned')>=15},
+ {id:'all',e:'🕌',t:'Весь алфавит',d:'Все 29 букв выучены',f:()=>countStatus('learned')>=29},
+ {id:'days3',e:'📅',t:'Постоянство',d:'Занятия в 3 разных дня',f:s=>s.days.length>=3}
+];
+
+/* ================== УТИЛИТЫ ================== */
+const $ = s=>document.querySelector(s);
+const esc = s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const rnd = n=>Math.floor(Math.random()*n);
+const pick = a=>a[rnd(a.length)];
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
+function plural(n,a,b,c){const m10=n%10,m100=n%100;if(m10===1&&m100!==11)return a;if(m10>=2&&m10<=4&&(m100<10||m100>=20))return b;return c;}
+function pct(c,t){return t?c/t*100:0;}
+function fmtPct(x){return (Math.round(x*10)/10).toLocaleString('ru-RU')+'%';}
+function ar(ch,cls){return '<span class="ar'+(ch==='ء'?' hz':'')+(cls?' '+cls:'')+'" dir="rtl" lang="ar">'+ch+'</span>';}
+function q(name){return '«'+name+'»';}
+function today(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function fmtDate(ts,withTime){const d=new Date(ts);let s=d.toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'});if(withTime)s+=', '+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});return s;}
+function fmtShort(ts){const d=new Date(ts);return d.toLocaleDateString('ru-RU',{day:'numeric',month:'short'})+'\n'+d.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});}
+function similarOf(ch){const s=new Set();SIMILAR.forEach(g=>{if(g.includes(ch))g.forEach(x=>{if(x!==ch)s.add(x);});});return [...s];}
+function dotWord(n){return n+' '+plural(n,'точка','точки','точек');}
+function dotDesc(l){return l.dots?('У неё '+dotWord(l.dots)+' '+(l.pos==='up'?'сверху':'снизу')):'У неё нет точек';}
+function dotShort(l){return l.dots?(dotWord(l.dots)+' '+(l.pos==='up'?'сверху':'снизу')):'без точек';}
+
+/* ================== ХРАНЕНИЕ ================== */
+const KEY = 'arabic-alphabet-trainer-v1';
+let storageOK = true;
+function defaultState(){
+  const letters={};ALL.forEach(c=>letters[c]={seen:0,correct:0,wrong:0,streak:0,last:0,intro:false,hardWins:0});
+  return {v:1,created:Date.now(),letters,stagesDone:[false,false,false,false],parts:{2:0,3:0},acc:{},stars:0,history:[],days:[],ach:{},
+    counters:{bestStreak:0,curStreak:0,comeback:0,perfect:0,answers:0,correct:0},lastSession:null};
+}
+function normalize(s){
+  const d=defaultState(); if(!s||typeof s!=='object') return d;
+  const o=d;
+  if(s.created) o.created=s.created;
+  o.stars=+s.stars||0;
+  o.lastSession=s.lastSession||null;
+  ALL.forEach(c=>{o.letters[c]=Object.assign({},o.letters[c],(s.letters&&s.letters[c])||{});});
+  o.stagesDone=[0,1,2,3].map(i=>!!(Array.isArray(s.stagesDone)&&s.stagesDone[i]));
+  o.parts=Object.assign({2:0,3:0},s.parts||{});
+  o.acc=(s.acc&&typeof s.acc==='object')?s.acc:{};
+  o.history=Array.isArray(s.history)?s.history:[];
+  o.days=Array.isArray(s.days)?s.days:[];
+  o.ach=(s.ach&&typeof s.ach==='object')?s.ach:{};
+  o.counters=Object.assign(o.counters,s.counters||{});
+  return o;
+}
+function load(){
+  try{
+    localStorage.setItem(KEY+'-test','1');localStorage.removeItem(KEY+'-test');
+    const raw=localStorage.getItem(KEY);
+    if(raw) return normalize(JSON.parse(raw));
+  }catch(e){storageOK=false;}
+  return defaultState();
+}
+function save(){
+  try{localStorage.setItem(KEY,JSON.stringify(state));storageOK=true;}catch(e){storageOK=false;}
+}
+let state = load();
+try{ if(navigator.storage&&navigator.storage.persist) navigator.storage.persist().catch(()=>{}); }catch(e){}
+
+function statusOf(ch){
+  const s=state.letters[ch];
+  if(!s.seen&&!s.intro) return 'new';
+  if(s.correct>=3&&s.streak>=2) return 'learned';
+  return 'review';
+}
+function countStatus(st){return ALL.filter(c=>statusOf(c)===st).length;}
+function weight(ch){const s=state.letters[ch];return 0.5+s.wrong*1.5+(statusOf(ch)==='review'?2:0)+(HARD.has(ch)?1:0)+(s.seen&&s.streak===0?1:0);}
+function weightedPick(list,n){
+  const pool=list.slice(),out=[];
+  while(out.length<n&&pool.length){
+    const w=pool.map(weight),sum=w.reduce((a,b)=>a+b,0);let r=Math.random()*sum,i=0;
+    for(;i<pool.length-1;i++){r-=w[i];if(r<=0)break;}
+    out.push(pool.splice(i,1)[0]);
+  }
+  return out;
+}
+function spread(arr){
+  const a=arr.slice();
+  for(let i=1;i<a.length;i++){
+    if(a[i].ch&&a[i].ch===a[i-1].ch){
+      let k=i+1;while(k<a.length&&(a[k].ch===a[i-1].ch||(a[k+1]&&a[k+1].ch===a[i].ch&&false)))k++;
+      if(k<a.length){const t=a[i];a[i]=a[k];a[k]=t;}
+    }
+  }
+  return a;
+}
+
+/* ================== ИЛЛЮСТРАЦИИ ================== */
+function star8(cx,cy,r,fill,extra){
+  return '<g transform="translate('+cx+' '+cy+')" '+(extra||'')+'><rect x="'+(-r)+'" y="'+(-r)+'" width="'+(2*r)+'" height="'+(2*r)+'" fill="'+fill+'"/><rect x="'+(-r)+'" y="'+(-r)+'" width="'+(2*r)+'" height="'+(2*r)+'" fill="'+fill+'" transform="rotate(45)"/></g>';
+}
+function twinkles(n,seed,color,h){
+  let s='',x=seed;
+  for(let i=0;i<n;i++){x=(x*9301+49297)%233280;const px=x/233280*320;x=(x*9301+49297)%233280;const py=x/233280*(h||120);x=(x*9301+49297)%233280;const r=0.8+x/233280*1.8;
+    s+='<circle class="tw" style="animation-delay:'+(i%7*0.4)+'s" cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="'+r.toFixed(1)+'" fill="'+color+'"/>';}
+  return s;
+}
+function sparkle(x,y,s,c){return '<path class="tw" d="M'+x+' '+(y-s)+'Q'+x+' '+y+' '+(x+s)+' '+y+'Q'+x+' '+y+' '+x+' '+(y+s)+'Q'+x+' '+y+' '+(x-s)+' '+y+'Q'+x+' '+y+' '+x+' '+(y-s)+'Z" fill="'+c+'"/>';}
+function rays(cx,cy,n,len,color,op){let s='';for(let i=0;i<n;i++){const a=i/n*Math.PI*2;s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+Math.cos(a)*len).toFixed(1)+'" y2="'+(cy+Math.sin(a)*len).toFixed(1)+'" stroke="'+color+'" stroke-opacity="'+op+'" stroke-width="'+(i%2?1:2.2)+'"/>';}return s;}
+const ART = {
+ book:()=>`<svg class="art" viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Раскрытая книга в золотистом свете">
+  <defs><radialGradient id="bk1" cx="50%" cy="58%" r="60%"><stop offset="0" stop-color="#fff4cc"/><stop offset=".4" stop-color="#f0d488" stop-opacity=".6"/><stop offset="1" stop-color="#f0d488" stop-opacity="0"/></radialGradient>
+  <linearGradient id="bk2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffbf0"/><stop offset="1" stop-color="#f1e3c2"/></linearGradient>
+  <linearGradient id="bkbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b3024"/><stop offset="1" stop-color="#1b5a43"/></linearGradient></defs>
+  <rect width="320" height="220" fill="url(#bkbg)"/>
+  ${twinkles(26,7,'#f5e6bb',110)}
+  <g class="rays">${rays(160,110,28,170,'#e0c070',.22)}</g>
+  <circle cx="160" cy="125" r="120" fill="url(#bk1)"/>
+  <path d="M50 158C92 148 128 150 160 170C192 150 228 148 270 158L270 166C228 156 192 158 160 178C128 158 92 156 50 166Z" fill="#185440"/>
+  <path d="M160 166C130 146 96 143 58 151L58 82C96 74 130 78 160 98Z" fill="url(#bk2)" stroke="#c49a3e" stroke-width="1.5"/>
+  <path d="M160 166C190 146 224 143 262 151L262 82C224 74 190 78 160 98Z" fill="url(#bk2)" stroke="#c49a3e" stroke-width="1.5"/>
+  <g stroke="#c49a3e" stroke-opacity=".45" stroke-width="1.3" fill="none">
+   <path d="M72 100C96 95 120 97 146 108"/><path d="M72 114C96 109 120 111 146 122"/><path d="M72 128C96 123 120 125 146 136"/>
+  </g>
+  <text x="212" y="130" text-anchor="middle" font-family="Amiri, serif" font-size="34" fill="#185440" direction="rtl">ا ب ت</text>
+  <path d="M160 98L160 166" stroke="#c49a3e" stroke-width="1.5"/>
+  ${sparkle(92,52,7,'#f5e6bb')}${sparkle(240,46,9,'#f5e6bb')}${sparkle(268,96,5,'#e0c070')}${sparkle(46,104,5,'#e0c070')}
+  ${star8(160,40,9,'#e0c070','class="float"')}
+ </svg>`,
+ sprout:()=>`<svg class="art" viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Росток и новые буквы">
+  <defs><linearGradient id="sp1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdf3dc"/><stop offset="1" stop-color="#e7f1e2"/></linearGradient>
+  <radialGradient id="sp2" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ffe7a3"/><stop offset="1" stop-color="#ffe7a3" stop-opacity="0"/></radialGradient></defs>
+  <rect width="320" height="220" fill="url(#sp1)"/>
+  <circle cx="160" cy="70" r="90" fill="url(#sp2)"/>
+  <g class="rays" style="transform-origin:160px 70px">${rays(160,70,20,140,'#e0c070',.25)}</g>
+  <path d="M0 180C70 160 120 168 160 176C210 186 260 164 320 172L320 220L0 220Z" fill="#9cc7a5"/>
+  <path d="M0 196C80 182 140 192 190 196C240 200 280 188 320 192L320 220L0 220Z" fill="#2f7d5c"/>
+  <g class="sway">
+   <path d="M160 178C160 150 158 128 162 100" stroke="#21694f" stroke-width="5" fill="none" stroke-linecap="round"/>
+   <path d="M161 132C140 128 122 112 120 92C142 94 158 108 161 132Z" fill="#3f9a6c"/>
+   <path d="M162 116C182 110 198 92 198 72C176 76 164 92 162 116Z" fill="#2f7d5c"/>
+   <path d="M162 102C156 90 158 78 166 70C170 82 168 94 162 102Z" fill="#5fb383"/>
+  </g>
+  <g class="float"><circle cx="62" cy="80" r="24" fill="#fffdf8" stroke="#c49a3e" stroke-width="1.5"/><text x="62" y="92" text-anchor="middle" font-family="Amiri, serif" font-size="30" fill="#185440">ج</text></g>
+  <g class="float" style="animation-delay:1.2s"><circle cx="256" cy="62" r="24" fill="#fffdf8" stroke="#c49a3e" stroke-width="1.5"/><text x="256" y="74" text-anchor="middle" font-family="Amiri, serif" font-size="30" fill="#185440">خ</text></g>
+  <g class="float" style="animation-delay:2.1s"><circle cx="248" cy="132" r="19" fill="#fffdf8" stroke="#c49a3e" stroke-width="1.5"/><text x="248" y="142" text-anchor="middle" font-family="Amiri, serif" font-size="24" fill="#185440">ف</text></g>
+  <g class="float" style="animation-delay:.6s"><circle cx="76" cy="140" r="17" fill="#fffdf8" stroke="#c49a3e" stroke-width="1.5"/><text x="76" y="149" text-anchor="middle" font-family="Amiri, serif" font-size="22" fill="#185440">م</text></g>
+  ${sparkle(118,40,6,'#c49a3e')}${sparkle(208,30,5,'#c49a3e')}${sparkle(30,40,4,'#e0c070')}
+ </svg>`,
+ sky:()=>`<svg class="art" viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Звёздное небо в арке с орнаментом">
+  <defs><linearGradient id="sk1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#071f17"/><stop offset="1" stop-color="#185440"/></linearGradient>
+  <radialGradient id="sk2" cx="50%" cy="40%" r="50%"><stop offset="0" stop-color="#e0c070" stop-opacity=".35"/><stop offset="1" stop-color="#e0c070" stop-opacity="0"/></radialGradient>
+  <clipPath id="skc"><path d="M100 220L100 100C100 60 130 34 160 18C190 34 220 60 220 100L220 220Z"/></clipPath></defs>
+  <rect width="320" height="220" fill="#0f3d2e"/>
+  <g fill="none" stroke="#c49a3e" stroke-opacity=".28">${[30,70,250,290].map(x=>[40,100,160].map(y=>'<g transform="translate('+x+' '+y+')"><rect x="-14" y="-14" width="28" height="28"/><rect x="-14" y="-14" width="28" height="28" transform="rotate(45)"/></g>').join('')).join('')}</g>
+  <g clip-path="url(#skc)"><rect width="320" height="220" fill="url(#sk1)"/>${twinkles(40,3,'#fdf3d0',220)}<circle cx="160" cy="90" r="80" fill="url(#sk2)"/>
+   <path d="M150 52A26 26 0 1 0 176 92A20 20 0 1 1 150 52Z" fill="#f2d78f" class="float"/>
+   ${star8(186,58,6,'#f5e6bb','class="tw"')}
+  </g>
+  <path d="M100 220L100 100C100 60 130 34 160 18C190 34 220 60 220 100L220 220" fill="none" stroke="#e0c070" stroke-width="4"/>
+  <path d="M90 220L90 98C90 54 124 26 160 6C196 26 230 54 230 98L230 220" fill="none" stroke="#c49a3e" stroke-width="1.5" stroke-dasharray="3 5"/>
+  <text x="160" y="190" text-anchor="middle" font-family="Amiri, serif" font-size="30" fill="#f5e6bb" direction="rtl">ب ت ث</text>
+ </svg>`,
+ star:()=>`<svg class="art" viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Сияющая звезда как символ достижения">
+  <defs><radialGradient id="st1" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff2c4"/><stop offset=".5" stop-color="#e0c070" stop-opacity=".45"/><stop offset="1" stop-color="#e0c070" stop-opacity="0"/></radialGradient>
+  <linearGradient id="st2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7e3a6"/><stop offset="1" stop-color="#c49a3e"/></linearGradient>
+  <linearGradient id="stbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b3024"/><stop offset="1" stop-color="#21694f"/></linearGradient></defs>
+  <rect width="320" height="220" fill="url(#stbg)"/>
+  ${twinkles(36,11,'#fdf3d0',220)}
+  <g class="rays">${rays(160,110,36,190,'#f5e6bb',.25)}</g>
+  <circle cx="160" cy="110" r="100" fill="url(#st1)"/>
+  ${star8(160,110,52,'url(#st2)')}
+  <circle cx="160" cy="110" r="44" fill="#0f3d2e" stroke="#f5e6bb" stroke-width="2"/>
+  <circle cx="160" cy="110" r="37" fill="none" stroke="#e0c070" stroke-width="1" stroke-dasharray="2 4"/>
+  <text x="160" y="124" text-anchor="middle" font-family="Amiri, serif" font-size="36" fill="#f5e6bb" direction="rtl">علم</text>
+  ${sparkle(64,48,9,'#f5e6bb')}${sparkle(262,58,7,'#f5e6bb')}${sparkle(250,176,6,'#e0c070')}${sparkle(66,170,6,'#e0c070')}
+ </svg>`
+};
+const ORN = `<svg viewBox="0 0 100 100" class="orn"><g fill="none" stroke="#e0c070" stroke-width="1.4"><rect x="20" y="20" width="60" height="60"/><rect x="20" y="20" width="60" height="60" transform="rotate(45 50 50)"/><circle cx="50" cy="50" r="18"/><circle cx="50" cy="50" r="42"/><rect x="34" y="34" width="32" height="32" transform="rotate(22.5 50 50)"/></g></svg>`;
+const RING8 = `<svg viewBox="0 0 100 100" class="ring8"><g fill="none" stroke="#c49a3e" stroke-width="1"><rect x="16" y="16" width="68" height="68"/><rect x="16" y="16" width="68" height="68" transform="rotate(45 50 50)"/><circle cx="50" cy="50" r="48"/></g></svg>`;
+
+/* ================== СЕССИЯ ================== */
+let S = null;
+let tab = 'home';
+let lastPos = -1;
+let lastKey = '';
+
+function newAcc(){return {correct:0,wrong:0,total:0,stars:0,wrongL:[],per:{},started:Date.now()};}
+
+function buildStage(n){
+  const steps=[];
+  if(n===1){
+    const base=KNOWN.map(ch=>({type:'name',ch,pool:KNOWN,similar:Math.random()<.5}));
+    const extra=weightedPick(KNOWN,4).map(ch=>({type:'name',ch,pool:KNOWN,similar:true}));
+    steps.push(...spread(shuffle(base).concat(shuffle(extra))));
+    steps.push({type:'partEnd',part:0,last:true});
+    steps.forEach(s=>s.label='Этап 1 · Знакомые буквы');
+  }else if(n===2){
+    for(let g=state.parts[2]||0;g<GROUPS.length;g++){
+      const grp=GROUPS[g],pool=KNOWN.concat(...GROUPS.slice(0,g+1)),prev=KNOWN.concat(...GROUPS.slice(0,g));
+      const label='Этап 2 · Группа '+(g+1)+' из '+GROUPS.length;
+      grp.forEach((ch,k)=>steps.push({type:'intro',ch,k:k+1,n:grp.length,label}));
+      let qs=grp.map(ch=>({type:'name',ch,pool,similar:false}));
+      qs=qs.concat(weightedPick(prev,3).map(ch=>({type:'name',ch,pool,similar:true,tag:'Вспоминаем'})));
+      qs=qs.concat(weightedPick(grp,2).map(ch=>({type:'letter',ch,pool,similar:true})));
+      spread(shuffle(qs)).forEach(s=>{s.label=label;steps.push(s);});
+      steps.push({type:'partEnd',part:g,label,partName:'Группа '+(g+1)+' из '+GROUPS.length,letters:grp});
+    }
+  }else if(n===3){
+    for(let t=state.parts[3]||0;t<TWINS.length;t++){
+      const set=TWINS[t],label='Этап 3 · Двойники '+(t+1)+' из '+TWINS.length;
+      const pool=ALL;
+      steps.push({type:'compare',set,label});
+      const qs=shuffle(set).map(ch=>({type:'name',ch,pool,similar:true,label}));
+      const tgt=pick(set),nb=pick(set.filter(c=>c!==tgt));
+      const withDots=set.filter(c=>BY[c].dots>0);
+      const d1=pick(set.filter(c=>c!==tgt))||pick(set);
+      const extra=[{type:'diff',ch:tgt,nb,label},{type:'dots',ch:d1,label}];
+      if(set.length>2||Math.random()<.5) extra.push({type:'pos',ch:pick(withDots),label});
+      steps.push(...spread(qs.concat(shuffle(extra))));
+      steps.push({type:'partEnd',part:t,label,partName:'Двойники '+(t+1)+' из '+TWINS.length,letters:set});
+    }
+  }else{
+    let seq=shuffle(ALL).map(ch=>({ch})).concat(weightedPick(ALL,6).map(ch=>({ch})));
+    seq=spread(shuffle(seq.slice(0,12)).concat(shuffle(seq.slice(12))));
+    const N=seq.length;
+    seq.forEach((o,i)=>{
+      const f=i/N;let type,similar,lvl;
+      if(f<.34){type='name';similar=false;lvl=1;}
+      else if(f<.67){type=i%3===0?'letter':'name';similar=true;lvl=2;}
+      else{type=i%2?'letter':'name';similar=true;lvl=3;}
+      steps.push({type,ch:o.ch,pool:ALL,similar,lvl,label:'Этап 4 · Большое испытание',maxRep:1});
+    });
+    steps.push({type:'partEnd',part:0,last:true});
+  }
+  return steps;
+}
+
+function startStage(n){
+  if(n>1&&!state.stagesDone[n-2]){toast('🔒','Пока закрыто','Сначала пройди этап '+(n-1)+'.');return;}
+  if(n===1||n===4||!state.acc[n]||!(state.parts[n]>0)) state.acc[n]=newAcc();
+  save();
+  startSession({kind:'stage',stage:n,title:'Этап '+n+'. '+STAGES[n-1].title,steps:buildStage(n)});
+}
+function buildPractice(list,opts){
+  opts=opts||{};
+  const steps=[];
+  list.forEach(ch=>{const s=state.letters[ch];if(!s.intro||opts.introAll) steps.push({type:'intro',ch,k:0,n:0});});
+  const pool=ALL;
+  let qs=list.map(ch=>({type:'name',ch,pool,similar:Math.random()<.5}));
+  qs=qs.concat(list.map(ch=>({type:Math.random()<.5?'letter':'name',ch,pool,similar:true})));
+  if(opts.single) qs=qs.concat([{type:'letter',ch:list[0],pool,similar:true},{type:'name',ch:list[0],pool,similar:true}]);
+  steps.push(...(opts.single?qs:spread(shuffle(qs.slice(0,list.length)).concat(shuffle(qs.slice(list.length))))));
+  steps.forEach(s=>s.label=opts.label||'Повторение');
+  return steps;
+}
+function startPractice(list,title,opts){
+  if(!list.length){toast('🌿','Нечего повторять','Здесь пока пусто — отличная работа!');return;}
+  startSession({kind:'practice',stage:0,title,steps:buildPractice(list,Object.assign({label:title},opts||{}))});
+}
+function dailyList(){
+  const seen=ALL.filter(c=>state.letters[c].seen>0||state.letters[c].intro);
+  const rev=seen.filter(c=>statusOf(c)==='review');
+  const rest=seen.filter(c=>statusOf(c)!=='review').sort((a,b)=>state.letters[a].last-state.letters[b].last);
+  return weightedPick(rev,Math.min(5,rev.length)).concat(rest).slice(0,8);
+}
+
+function startSession(cfg){
+  S=Object.assign({i:0,correct:0,wrong:0,total:0,stars:0,answered:false,pc:0,pw:0,pt:0,ps:0,pwrong:[],pper:{},wrongL:[],per:{},startedAt:Date.now()},cfg);
+  document.body.classList.add('in-session');
+  enterStep();
+}
+function curStep(){return S&&S.steps[S.i];}
+function enterStep(){
+  const st=curStep();
+  if(!st){finish();return;}
+  if(st.type==='partEnd'){
+    if(!st.flushed){flushPart(st);st.flushed=true;}
+    if(st.last||S.i===S.steps.length-1){finish();return;}
+  }
+  if(st.type==='intro'){state.letters[st.ch].intro=true;save();}
+  render();
+}
+function next(){S.i++;S.answered=false;enterStep();}
+
+function flushPart(st){
+  if(S.kind!=='stage') return;
+  const a=state.acc[S.stage]||(state.acc[S.stage]=newAcc());
+  a.correct+=S.pc;a.wrong+=S.pw;a.total+=S.pt;a.stars+=S.ps;
+  S.pwrong.forEach(c=>{if(!a.wrongL.includes(c))a.wrongL.push(c);});
+  Object.keys(S.pper).forEach(c=>{const p=a.per[c]||(a.per[c]={ok:0,bad:0});p.ok+=S.pper[c].ok;p.bad+=S.pper[c].bad;});
+  st.partStats={correct:S.pc,wrong:S.pw,total:S.pt};
+  S.pc=S.pw=S.pt=S.ps=0;S.pwrong=[];S.pper={};
+  if(S.stage===2||S.stage===3) state.parts[S.stage]=st.part+1;
+  save();
+}
+
+function buildOptions(st){
+  if(st.opts) return;
+  const l=BY[st.ch];
+  if(st.type==='name'||st.type==='letter'){
+    const pool=st.pool||ALL;const chosen=[];
+    if(st.similar) shuffle(similarOf(st.ch).filter(c=>pool.includes(c))).forEach(c=>{if(chosen.length<2)chosen.push(c);});
+    shuffle(pool).forEach(c=>{if(chosen.length<3&&c!==st.ch&&!chosen.includes(c))chosen.push(c);});
+    shuffle(ALL).forEach(c=>{if(chosen.length<3&&c!==st.ch&&!chosen.includes(c))chosen.push(c);});
+    let arr=shuffle([st.ch].concat(chosen));
+    let pos=arr.indexOf(st.ch);
+    if(pos===lastPos&&Math.random()<.75){arr=shuffle(arr);pos=arr.indexOf(st.ch);}
+    lastPos=pos;
+    st.opts=arr.map(c=>({ch:c,label:st.type==='name'?BY[c].name:c,ok:c===st.ch}));
+  }else if(st.type==='dots'){
+    st.opts=[0,1,2,3].map(n=>({label:n?dotWord(n):'Нет точек',ok:n===l.dots}));
+  }else if(st.type==='pos'){
+    st.opts=[['up','Сверху'],['down','Снизу'],['','Точек нет']].map(p=>({label:p[1],ok:p[0]===l.pos}));
+  }else if(st.type==='diff'){
+    const all=['У неё нет точек','У неё 1 точка сверху','У неё 1 точка снизу','У неё 2 точки сверху','У неё 2 точки снизу','У неё 3 точки сверху'];
+    const right=dotDesc(l),nbd=dotDesc(BY[st.nb]);
+    const others=shuffle(all.filter(x=>x!==right&&x!==nbd)).slice(0,2);
+    st.opts=shuffle([right,nbd].concat(others)).map(x=>({label:x,ok:x===right}));
+  }
+}
+
+function answer(idx){
+  const st=curStep();
+  if(!st||S.answered||!st.opts) return;
+  S.answered=true;st.picked=idx;
+  const ok=!!st.opts[idx].ok;st.wasOk=ok;
+  const ls=state.letters[st.ch];
+  const wasHard=statusOf(st.ch)==='review'&&ls.wrong>0;
+  ls.seen++;ls.last=Date.now();
+  state.counters.answers++;
+  S.total++;S.pt++;
+  const pp=S.pper[st.ch]||(S.pper[st.ch]={ok:0,bad:0});const sp=S.per[st.ch]||(S.per[st.ch]={ok:0,bad:0});
+  if(ok){
+    ls.correct++;ls.streak++;S.correct++;S.pc++;pp.ok++;sp.ok++;state.counters.correct++;
+    state.stars++;S.stars++;S.ps++;
+    state.counters.curStreak++;state.counters.bestStreak=Math.max(state.counters.bestStreak,state.counters.curStreak);
+    if(wasHard){ls.hardWins++;state.counters.comeback++;state.stars++;S.stars++;S.ps++;st.hardWin=true;}
+  }else{
+    ls.wrong++;ls.streak=0;S.wrong++;S.pw++;pp.bad++;sp.bad++;state.counters.curStreak=0;
+    if(!S.pwrong.includes(st.ch))S.pwrong.push(st.ch);
+    if(!S.wrongL.includes(st.ch))S.wrongL.push(st.ch);
+    const rep=(st.rep||0),max=st.maxRep!==undefined?st.maxRep:2;
+    if(rep<max){
+      let j=S.i+1;const lim=S.i+3;
+      while(j<S.steps.length&&j<lim&&S.steps[j].type!=='partEnd')j++;
+      S.steps.splice(j,0,{type:'name',ch:st.ch,pool:st.pool||ALL,similar:true,rep:rep+1,tag:'Повторяем',label:st.label,maxRep:st.maxRep});
+    }
+  }
+  save();
+  render();
+  if(ok){const b=document.querySelector('.opt[data-i="'+idx+'"]');if(b)sparkleAt(b);}
+  checkAch();
+  const fb=$('.fb');if(fb&&fb.getBoundingClientRect().bottom>window.innerHeight) fb.scrollIntoView({behavior:'smooth',block:'end'});
+}
+
+function finish(){
+  const sess=S;
+  let entry;
+  if(sess.kind==='stage'){
+    const n=sess.stage,a=state.acc[n]||newAcc();
+    delete state.acc[n];
+    if(n===2||n===3) state.parts[n]=0;
+    state.stagesDone[n-1]=true;
+    state.stars+=5;a.stars+=5;
+    entry={ts:Date.now(),kind:'stage',stage:n,title:sess.title,correct:a.correct,wrong:a.wrong,total:a.total,stars:a.stars,wrongL:a.wrongL,per:a.per};
+  }else{
+    entry={ts:Date.now(),kind:'practice',stage:0,title:sess.title,correct:sess.correct,wrong:sess.wrong,total:sess.total,stars:sess.stars,wrongL:sess.wrongL,per:sess.per};
+  }
+  if(entry.total>0&&entry.wrong===0) state.counters.perfect++;
+  state.history.push(entry);
+  if(state.history.length>300) state.history=state.history.slice(-300);
+  state.lastSession=entry;
+  const d=today();if(!state.days.includes(d))state.days.push(d);
+  save();
+  S={kind:'finish',entry,steps:[],i:0};
+  render();
+  checkAch();
+  window.scrollTo(0,0);
+}
+function quitSession(){
+  S=null;document.body.classList.remove('in-session');tab='home';render();window.scrollTo(0,0);
+}
+
+/* ================== ДОСТИЖЕНИЯ, ТОСТЫ, ЭФФЕКТЫ ================== */
+const toastQ=[];let toastBusy=false;
+function toast(e,title,text){toastQ.push({e,title,text});if(!toastBusy)nextToast();}
+function nextToast(){
+  const t=toastQ.shift();const box=$('#toast');
+  if(!t){toastBusy=false;box.innerHTML='';return;}
+  toastBusy=true;
+  box.innerHTML='<div class="toast"><div class="e">'+t.e+'</div><div><b>'+esc(t.title)+'</b>'+esc(t.text)+'</div></div>';
+  setTimeout(nextToast,2800);
+}
+function checkAch(){
+  let changed=false;
+  ACH.forEach(a=>{if(!state.ach[a.id]&&a.f(state)){state.ach[a.id]=Date.now();changed=true;toast(a.e,'Новое достижение',a.t+' — '+a.d);}});
+  if(changed)save();
+}
+function sparkleAt(el){
+  const r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+  for(let i=0;i<12;i++){
+    const s=document.createElement('span');s.className='spark';s.textContent=i%3?'✦':'✧';
+    const a=Math.random()*Math.PI*2,d=40+Math.random()*50;
+    s.style.left=cx+'px';s.style.top=cy+'px';s.style.setProperty('--dx',(Math.cos(a)*d).toFixed(0)+'px');s.style.setProperty('--dy',(Math.sin(a)*d).toFixed(0)+'px');
+    document.body.appendChild(s);setTimeout(()=>s.remove(),900);
+  }
+}
+
+/* ================== МОДАЛЬНЫЕ ОКНА ================== */
+let modalResolve=null;
+function ask(title,text,okLabel,cancelLabel,danger){
+  return new Promise(res=>{
+    modalResolve=res;
+    $('#modal').innerHTML='<div class="modal-bg" data-act="modal-no"><div class="sheet" data-stop="1"><h3>'+esc(title)+'</h3><p>'+text+'</p><div class="stack"><button class="btn '+(danger?'gold':'primary')+'" data-act="modal-yes">'+esc(okLabel)+'</button><button class="btn ghost" data-act="modal-no">'+esc(cancelLabel||'Отмена')+'</button></div></div></div>';
+  });
+}
+function closeModal(v){$('#modal').innerHTML='';if(modalResolve){const r=modalResolve;modalResolve=null;r(v);}}
+function letterSheet(ch){
+  const l=BY[ch],s=state.letters[ch],st=statusOf(ch);
+  const stLabel={learned:'Выучена',review:'Повторить',new:'Предстоит изучить'}[st];
+  const cls={learned:'',review:'peach',new:'light'}[st];
+  $('#modal').innerHTML='<div class="modal-bg" data-act="modal-close"><div class="sheet" data-stop="1" style="text-align:center">'+
+    '<div class="intro" style="padding:0"><div class="glyph" style="height:170px"><div class="disc"></div>'+ar(ch)+'</div><div class="name">'+esc(l.name)+'</div></div>'+
+    '<div style="margin:6px 0 8px"><span class="pill '+cls+'">'+stLabel+'</span>'+(s.hardWins?' <span class="pill gold">🏅 исправлена '+s.hardWins+' '+plural(s.hardWins,'раз','раза','раз')+'</span>':'')+'</div>'+
+    '<p style="margin:4px 0">'+esc(l.hint)+'</p><p class="small" style="margin:2px 0 12px">Точки: '+dotShort(l)+'</p>'+
+    '<div class="stats" style="margin:10px 0 14px"><div class="stat"><b>'+s.seen+'</b><span>ответов</span></div><div class="stat"><b>'+s.correct+'</b><span>верно</span></div><div class="stat"><b>'+s.wrong+'</b><span>ошибок</span></div><div class="stat"><b>'+s.streak+'</b><span>подряд</span></div></div>'+
+    '<div class="stack"><button class="btn primary" data-act="practice-one" data-ch="'+ch+'">Потренировать эту букву</button><button class="btn ghost" data-act="modal-close">Закрыть</button></div></div></div>';
+}
+
+/* ================== ОТЧЁТ ================== */
+function lastStageEntry(){for(let i=state.history.length-1;i>=0;i--)if(state.history[i].kind==='stage')return state.history[i];return null;}
+function buildReport(){
+  const learned=ALL.filter(c=>statusOf(c)==='learned').map(c=>BY[c].name);
+  const review=ALL.filter(c=>statusOf(c)==='review').map(c=>BY[c].name);
+  const ls=state.lastSession,lst=lastStageEntry();
+  const lines=['🌿 Результаты изучения арабского алфавита','','📅 Дата: '+fmtDate(ls?ls.ts:Date.now(),true),''];
+  if(lst){lines.push('Пройден этап: '+lst.stage+' — «'+STAGES[lst.stage-1].title+'»');}
+  else lines.push('Пройден этап: пока ни одного');
+  lines.push('Пройдено этапов: '+state.stagesDone.filter(Boolean).length+' из 4');
+  if(ls){
+    lines.push('');
+    if(ls.kind==='practice') lines.push('Последнее занятие: '+ls.title);
+    lines.push('Правильные ответы: '+ls.correct+' из '+ls.total);
+    lines.push('Результат: '+fmtPct(pct(ls.correct,ls.total)));
+    lines.push('Ошибки: '+ls.wrong);
+  }else{lines.push('','Занятий пока не было.');}
+  lines.push('');
+  lines.push('✅ Уже закреплены'+(learned.length?' ('+learned.length+'): '+learned.join(', '):': пока нет'));
+  lines.push('🔁 Нужно повторить'+(review.length?' ('+review.length+'): '+review.join(', '):': нет'));
+  lines.push('');
+  lines.push('📊 Общий прогресс: '+learned.length+' из 29 букв');
+  lines.push('⭐ Звёзды: '+state.stars);
+  lines.push('');
+  lines.push('Продолжаю учиться! 🌱');
+  return lines.join('\n');
+}
+function waLink(){return 'https://wa.me/?text='+encodeURIComponent(buildReport());}
+
+/* ================== ЭКСПОРТ / ИМПОРТ ================== */
+function exportJSON(){return JSON.stringify({app:'arabic-alphabet-trainer',version:1,exportedAt:new Date().toISOString(),state},null,1);}
+function tryDownload(){
+  const txt=exportJSON();
+  try{
+    const blob=new Blob([txt],{type:'application/json'});const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;a.download='arabic-progress-'+today()+'.json';document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),4000);
+  }catch(e){}
+  const ta=$('#exportBox');if(ta){ta.value=txt;ta.parentElement.style.display='block';}
+}
+async function importText(txt){
+  let obj;
+  try{obj=JSON.parse(txt);}catch(e){toast('📄','Не получилось','Это не похоже на файл с прогрессом.');return;}
+  const st=obj&&obj.state?obj.state:obj;
+  if(!st||typeof st!=='object'||!st.letters){toast('📄','Не получилось','В файле нет данных о буквах.');return;}
+  const n=normalize(st);
+  const when=obj.exportedAt?fmtDate(Date.parse(obj.exportedAt),true):'неизвестной даты';
+  const learned=ALL.filter(c=>{const s=n.letters[c];return s.correct>=3&&s.streak>=2;}).length;
+  const ok=await ask('Восстановить прогресс?','Копия от '+esc(when)+': этапов пройдено — '+n.stagesDone.filter(Boolean).length+' из 4, выучено букв — '+learned+', звёзд — '+n.stars+'.<br><br>Текущий прогресс на этом устройстве будет заменён.','Восстановить','Отмена');
+  if(!ok) return;
+  state=n;save();toast('✅','Готово','Прогресс восстановлен.');render();
+}
+
+/* ================== ОТРИСОВКА ================== */
+function render(){
+  const app=$('#app');
+  document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.dataset.tab===tab));
+  const key=S?(S.kind+':'+S.i):tab;const same=key===lastKey;lastKey=key;
+  if(S){app.innerHTML='<div class="screen'+(same?' noanim':'')+'">'+(S.kind==='finish'?viewFinish():viewSession())+'</div>';return;}
+  document.body.classList.remove('in-session');
+  app.innerHTML='<div class="screen">'+(tab==='map'?viewMap():tab==='progress'?viewProgress():viewHome())+'</div>';
+}
+function storageWarn(){return storageOK?'':'<div class="warn">⚠️ Браузер не даёт сохранять данные (например, приватный режим). Прогресс может не сохраниться — открой ссылку в обычном режиме или сохраняй копию на вкладке «Прогресс».</div>';}
+
+function viewHome(){
+  const learned=countStatus('learned'),done=state.stagesDone.filter(Boolean).length;
+  const C=2*Math.PI*40,off=C*(1-learned/29);
+  const curN=state.stagesDone.indexOf(false)+1;
+  const hour=new Date().getHours();
+  let h=storageWarn()+'<div class="hero">'+ORN+
+   '<div class="hello">Ас-саляму алейкум! 🌙</div><h1>Арабский алфавит</h1><div class="sub">'+(hour<12?'Доброе утро — ':hour<18?'Добрый день — ':'Добрый вечер — ')+'учим названия букв спокойно и с удовольствием.</div>'+
+   '<div class="hero-row"><div class="ring"><svg viewBox="0 0 92 92"><circle cx="46" cy="46" r="40" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="8"/><circle cx="46" cy="46" r="40" fill="none" stroke="#e0c070" stroke-width="8" stroke-linecap="round" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+off.toFixed(1)+'" style="transition:stroke-dashoffset .8s"/></svg><div class="rt">'+learned+'<small>из 29</small></div></div>'+
+   '<div class="chips"><div class="chip">⭐ Звёзды: <b>'+state.stars+'</b></div><div class="chip">📖 Выучено букв: <b>'+learned+'</b></div><div class="chip">🏁 Этапы: <b>'+done+' из 4</b></div></div></div></div>';
+  const dl=dailyList();
+  if(dl.length) h+='<div class="card daily"><div class="ic">🌿</div><div class="t"><b>Повторение дня</b><span class="small muted">'+dl.length+' '+plural(dl.length,'буква','буквы','букв')+' — вспомним то, что учили раньше</span></div><button class="btn gold" data-act="daily">Начать</button></div>';
+  h+='<h2>Мой путь</h2><div class="path">';
+  STAGES.forEach(s=>{
+    const isDone=state.stagesDone[s.n-1],locked=s.n>1&&!state.stagesDone[s.n-2],isCur=s.n===curN;
+    const cls=isDone?'done':locked?'locked':isCur?'current':'';
+    let meta='';
+    if(s.n===2&&state.parts[2]>0) meta+='<span class="pill gold">Группа '+(state.parts[2]+1)+' из 4</span>';
+    if(s.n===3&&state.parts[3]>0) meta+='<span class="pill gold">Двойники '+(state.parts[3]+1)+' из 7</span>';
+    const last=[...state.history].reverse().find(e=>e.kind==='stage'&&e.stage===s.n);
+    if(last) meta+='<span class="pill">Результат: '+fmtPct(pct(last.correct,last.total))+'</span>';
+    if(isDone) meta+='<span class="pill">✓ Пройден</span>';
+    if(locked) meta+='<span class="pill light">🔒 Откроется после этапа '+(s.n-1)+'</span>';
+    const inProg=(s.n===2&&state.parts[2]>0)||(s.n===3&&state.parts[3]>0);
+    const btn=locked?'':'<button class="btn '+(isDone&&!inProg?'ghost':'primary')+'" data-act="stage" data-n="'+s.n+'">'+(inProg?'Продолжить':isDone?'Пройти ещё раз':'Начать')+'</button>';
+    h+='<div class="stage '+cls+'"><div class="num"><i>'+(isDone?'✓':s.n)+'</i></div><div class="card"><div class="st-k">Этап '+s.n+'</div><h3>'+s.title+'</h3><p>'+s.desc+'</p>'+(meta?'<div class="meta">'+meta+'</div>':'')+btn+'</div></div>';
+  });
+  h+='</div>';
+  return h;
+}
+
+function viewSession(){
+  const st=curStep();
+  const prog=Math.min(100,S.i/S.steps.length*100);
+  let h='<div class="s-top"><button class="icon-btn" data-act="quit" aria-label="Выйти">✕</button><div class="bar"><i style="width:'+prog.toFixed(1)+'%"></i></div><div class="s-stars">⭐ '+S.stars+'</div></div>';
+  h+='<div class="s-title">'+esc(st.label||S.title)+'</div>';
+  if(st.type==='intro'){
+    const l=BY[st.ch];
+    h+='<div class="card intro"><div class="k">'+(st.n?'Новая буква '+st.k+' из '+st.n:'Знакомимся с буквой')+'</div>'+
+      '<div class="glyph"><div class="disc"></div>'+RING8+ar(st.ch)+'</div><div class="name">'+esc(l.name)+'</div>'+
+      '<p class="hint">'+esc(l.hint)+'</p>'+
+      '<div class="say" style="justify-content:center">👀 Посмотри внимательно и скажи вслух: <b>'+esc(l.name)+'</b></div>'+
+      '<button class="btn primary" data-act="next">Запомнила →</button></div>';
+  }else if(st.type==='compare'){
+    h+='<div class="card intro"><div class="k">Буквы-двойники</div><h2 style="margin:6px 0 4px">Найди отличия</h2><p class="hint" style="margin-top:0">Форма у этих букв одинаковая — различаются только точки. Посмотри на каждую и проговори её название.</p>'+
+      '<div class="cmp">'+st.set.map(c=>'<div class="c">'+ar(c)+'<b>'+esc(BY[c].name)+'</b><span class="d">'+dotShort(BY[c])+'</span></div>').join('')+'</div>'+
+      '<button class="btn primary" data-act="next">Понятно, проверим →</button></div>';
+  }else if(st.type==='partEnd'){
+    const ps=st.partStats||{correct:0,total:0,wrong:0};
+    h+='<div class="card intro"><div class="k">Мини-тест пройден</div><div style="font-size:54px;margin:8px 0">✨</div><h2 style="margin:0 0 6px">'+esc(st.partName)+' — готово!</h2>'+
+      '<p class="hint">Верно: <b>'+ps.correct+' из '+ps.total+'</b>'+(ps.wrong?' · ошибки уже добавлены в повторение':' — без ошибок, прекрасно!')+'</p>'+
+      '<div class="chips2" style="margin:12px 0 16px">'+st.letters.map(c=>'<span class="lchip">'+ar(c)+esc(BY[c].name)+'</span>').join('')+'</div>'+
+      '<div class="stack"><button class="btn primary" data-act="next">Продолжить →</button><button class="btn ghost" data-act="pause">Сделать перерыв (прогресс сохранён)</button></div></div>';
+  }else{
+    buildOptions(st);
+    const l=BY[st.ch];
+    let prompt='',display='';
+    if(st.type==='name'){prompt='Как называется эта буква?';display='<div class="q-display"><div class="disc"></div>'+ar(st.ch,'big')+'</div>';}
+    else if(st.type==='letter'){prompt='Найди букву';display='<div class="q-display"><div class="disc"></div><div class="nm">'+esc(q(l.name))+'</div></div>';}
+    else if(st.type==='dots'){prompt='Сколько точек у буквы';display='<div class="q-display" style="min-height:120px"><div class="disc"></div><div class="nm">'+esc(q(l.name))+'</div></div>';}
+    else if(st.type==='pos'){prompt='Где расположены точки у буквы';display='<div class="q-display" style="min-height:120px"><div class="disc"></div><div class="nm">'+esc(q(l.name))+'</div></div>';}
+    else if(st.type==='diff'){prompt='Чем эта буква отличается от соседней?';display='<div class="q-display pair"><div class="cell other">'+ar(st.nb)+'<span class="lbl">соседняя</span></div><div class="cell this">'+ar(st.ch)+'<span class="lbl">эта буква</span></div></div>';}
+    h+='<div class="q-card">'+(st.lvl?'<span class="lvl">Уровень '+st.lvl+'</span>':'')+(st.tag?'<span class="pill gold q-tag">'+esc(st.tag)+'</span>':'')+'<div class="q-prompt">'+prompt+'</div>'+display+'</div>';
+    const cols=st.opts.length===3?' three':'';
+    const txt=(st.type==='diff')?' txt':'';
+    h+='<div class="opts'+cols+(st.type==='diff'?' one':'')+'">';
+    st.opts.forEach((o,i)=>{
+      let c='opt'+txt;
+      if(S.answered){if(o.ok)c+=' ok';else if(i===st.picked)c+=' bad';else c+=' dim';}
+      const inner=st.type==='letter'?ar(o.label):esc(o.label);
+      h+='<button class="'+c+'" data-act="ans" data-i="'+i+'"'+(S.answered?' disabled':'')+'>'+inner+'</button>';
+    });
+    h+='</div>';
+    if(S.answered) h+=feedback(st);
+  }
+  return h;
+}
+function feedback(st){
+  const l=BY[st.ch],ok=st.wasOk,picked=st.opts[st.picked];
+  let h='<div class="fb '+(ok?'ok':'soft')+'">';
+  if(ok){
+    h+='<h3>'+pick(PRAISE)+' ✨</h3>';
+    if(st.type==='name'||st.type==='letter') h+='<p>'+ar(st.ch)+' — это <b>'+esc(q(l.name))+'</b>.</p>';
+    else if(st.type==='dots'||st.type==='pos') h+='<p>У буквы <b>'+esc(q(l.name))+'</b> '+ar(st.ch)+' — '+dotShort(l)+'.</p>';
+    else h+='<p>Это <b>'+esc(q(l.name))+'</b> '+ar(st.ch)+': '+dotShort(l)+'. А соседняя — <b>'+esc(q(BY[st.nb].name))+'</b>: '+dotShort(BY[st.nb])+'.</p>';
+    if(st.hardWin) h+='<span class="badge-hard">🏅 Раньше здесь была ошибка — а теперь верно! +1 ⭐</span>';
+    h+='<div class="say">🗣 Скажи вслух: <b>'+esc(l.name)+'</b></div>';
+  }else{
+    h+='<h3>'+pick(SOFT)+' 🌸</h3>';
+    if(st.type==='name'){
+      h+='<p>Это буква <b>'+esc(q(l.name))+'</b> '+ar(st.ch)+'.</p><p class="small">Подсказка: '+esc(l.hint)+'</p>';
+      if(picked&&picked.ch) h+='<p class="small">А '+esc(q(BY[picked.ch].name))+' выглядит так: '+ar(picked.ch)+'</p>';
+    }else if(st.type==='letter'){
+      h+='<p><b>'+esc(q(l.name))+'</b> — вот эта буква: '+ar(st.ch)+'</p><p class="small">Подсказка: '+esc(l.hint)+'</p>';
+      if(picked&&picked.ch) h+='<p class="small">Ты выбрала '+ar(picked.ch)+' — это '+esc(q(BY[picked.ch].name))+'.</p>';
+    }else if(st.type==='dots'||st.type==='pos'){
+      h+='<p>У буквы <b>'+esc(q(l.name))+'</b> '+ar(st.ch)+' — '+dotShort(l)+'.</p><p class="small">Подсказка: '+esc(l.hint)+'</p>';
+    }else{
+      h+='<p>Это <b>'+esc(q(l.name))+'</b> '+ar(st.ch)+': '+dotShort(l)+'. А соседняя — <b>'+esc(q(BY[st.nb].name))+'</b> '+ar(st.nb)+': '+dotShort(BY[st.nb])+'.</p>';
+    }
+    h+='<div class="say">🗣 Повтори вслух три раза: <b>'+esc(l.name)+', '+esc(l.name)+', '+esc(l.name)+'</b></div><p class="small muted">Мы обязательно вернёмся к этой букве ещё раз.</p>';
+  }
+  h+='<button class="btn primary" data-act="next">Дальше →</button></div>';
+  return h;
+}
+
+function viewFinish(){
+  const e=S.entry;
+  const isStage=e.kind==='stage';const st=isStage?STAGES[e.stage-1]:null;
+  const art=isStage?ART[st.art]():ART[pick(['sprout','book'])]();
+  const p=pct(e.correct,e.total);
+  let h='<div class="finish">'+art+'<h1>'+(isStage?'Этап '+e.stage+' пройден!':'Повторение завершено!')+'</h1>';
+  h+='<p class="motiv">'+(isStage?st.motiv:pick(PRACTICE_MOTIV))+'</p>';
+  h+='<div class="stats"><div class="stat"><b>'+e.correct+'</b><span>верно</span></div><div class="stat"><b>'+e.wrong+'</b><span>ошибок</span></div><div class="stat"><b>'+fmtPct(p)+'</b><span>результат</span></div><div class="stat"><b>+'+e.stars+'</b><span>⭐ звёзд</span></div></div>';
+  h+='<p class="small muted">Всего вопросов: '+e.total+'</p>';
+  const per=e.per||{};
+  const good=Object.keys(per).filter(c=>per[c].bad===0&&per[c].ok>0);
+  const bad=Object.keys(per).filter(c=>per[c].bad>0);
+  if(isStage&&e.stage===4){
+    const learned=ALL.filter(c=>statusOf(c)==='learned'),rev=ALL.filter(c=>statusOf(c)==='review');
+    h+='<div class="card sec"><h3>🌿 Хорошо запомнились ('+learned.length+')</h3><div class="chips2">'+(learned.length?learned.map(c=>'<span class="lchip">'+ar(c)+esc(BY[c].name)+'</span>').join(''):'<span class="muted small">Чтобы буква считалась выученной, на неё нужно несколько раз подряд ответить верно.</span>')+'</div></div>';
+    h+='<div class="card sec"><h3>🔁 Требуют повторения ('+rev.length+')</h3><div class="chips2">'+(rev.length?rev.map(c=>'<span class="lchip peach">'+ar(c)+esc(BY[c].name)+'</span>').join(''):'<span class="muted small">Таких букв нет — замечательно!</span>')+'</div></div>';
+    if(bad.length) h+='<div class="card sec"><h3>Ошибки в этом испытании</h3><div class="chips2">'+bad.map(c=>'<span class="lchip peach">'+ar(c)+esc(BY[c].name)+' · '+per[c].bad+'</span>').join('')+'</div></div>';
+  }else{
+    if(good.length) h+='<div class="card sec"><h3>🌿 Без ошибок</h3><div class="chips2">'+good.map(c=>'<span class="lchip">'+ar(c)+esc(BY[c].name)+'</span>').join('')+'</div></div>';
+    if(bad.length) h+='<div class="card sec"><h3>🔁 Стоит повторить</h3><div class="chips2">'+bad.map(c=>'<span class="lchip peach">'+ar(c)+esc(BY[c].name)+'</span>').join('')+'</div></div>';
+  }
+  h+='<div class="stack" style="margin-top:16px">';
+  if(isStage&&e.stage<4) h+='<button class="btn primary" data-act="stage" data-n="'+(e.stage+1)+'">Дальше: этап '+(e.stage+1)+' →</button>';
+  if(bad.length) h+='<button class="btn gold" data-act="practice-list" data-list="'+bad.join('')+'">Повторить трудные буквы</button>';
+  h+='<button class="btn ghost" data-act="go" data-tab="progress">Мой прогресс и отчёт</button><button class="btn ghost" data-act="go" data-tab="home">На главную</button></div></div>';
+  return h;
+}
+
+function viewMap(){
+  const L=countStatus('learned'),R=countStatus('review'),N=countStatus('new');
+  let h=storageWarn()+'<h1>Моя карта букв</h1><p class="muted small" style="margin:6px 0 0">Нажми на букву, чтобы посмотреть подробности. Статус меняется сам по результатам ответов: буква становится выученной после нескольких верных ответов подряд.</p>';
+  h+='<div class="dist"><i style="width:'+(L/29*100)+'%;background:#5fae80"></i><i style="width:'+(R/29*100)+'%;background:#f3c6a5"></i></div>';
+  h+='<div class="legend"><span class="pill">● Выучена: '+L+'</span><span class="pill peach">● Повторить: '+R+'</span><span class="pill light">● Предстоит изучить: '+N+'</span></div>';
+  h+='<div class="grid">';
+  LETTERS.forEach(l=>{const s=statusOf(l.ch);const t={learned:'выучена',review:'повторить',new:'впереди'}[s];
+    h+='<button class="tile st-'+s+'" data-act="letter" data-ch="'+l.ch+'">'+(state.letters[l.ch].hardWins?'<span class="medal">🏅</span>':'')+ar(l.ch)+'<b>'+esc(l.name)+'</b><i>'+t+'</i></button>';});
+  h+='</div><div class="stack" style="margin-top:16px">';
+  h+='<button class="btn gold" data-act="practice-review"'+(R?'':' disabled')+'>🔁 Повторить буквы «Повторить» ('+R+')</button>';
+  h+='<button class="btn primary" data-act="practice-new"'+(N?'':' disabled')+'>🌱 Изучить новые буквы ('+N+')</button></div>';
+  return h;
+}
+
+function viewProgress(){
+  const learned=countStatus('learned'),done=state.stagesDone.filter(Boolean).length;
+  const c=state.counters;
+  let h=storageWarn()+'<h1>Мой прогресс</h1>';
+  h+='<div class="stats" style="margin-top:14px"><div class="stat"><b>'+state.stars+'</b><span>⭐ звёзд</span></div><div class="stat"><b>'+done+'/4</b><span>этапов</span></div><div class="stat"><b>'+learned+'/29</b><span>выучено</span></div><div class="stat"><b>'+(c.answers?Math.round(c.correct/c.answers*100)+'%':'—')+'</b><span>точность</span></div></div>';
+  h+='<p class="small muted" style="margin:0">Всего ответов: '+c.answers+' · верных: '+c.correct+' · ошибок: '+(c.answers-c.correct)+' · дней занятий: '+state.days.length+'</p>';
+
+  h+='<h2>Отчёт для Мухаммада</h2><div class="card"><pre class="report">'+esc(buildReport())+'</pre>';
+  h+='<a class="btn wa" id="waBtn" href="'+esc(waLink())+'" target="_blank" rel="noopener" data-act="wa">Отправить результаты Мухаммаду</a>';
+  h+='<p class="note">Откроется WhatsApp с готовым сообщением — выбери чат с Мухаммадом и нажми «Отправить». Без твоего подтверждения ничего не отправляется.</p></div>';
+
+  h+='<h2>Достижения</h2><div class="ach">'+ACH.map(a=>'<div class="a'+(state.ach[a.id]?'':' off')+'"><div class="e">'+a.e+'</div><b>'+a.t+'</b><span>'+a.d+'</span></div>').join('')+'</div>';
+
+  h+='<h2>История занятий</h2><div class="card">';
+  const hist=state.history.slice(-30).reverse();
+  if(!hist.length) h+='<p class="muted" style="margin:0">Здесь появятся твои занятия.</p>';
+  else h+='<ul class="hist">'+hist.map(e=>'<li><span class="d">'+esc(fmtShort(e.ts)).replace('\n','<br>')+'</span><span class="t">'+esc(e.title)+'</span><span class="r">'+e.correct+'/'+e.total+'<br><span class="small muted">'+fmtPct(pct(e.correct,e.total))+'</span></span></li>').join('')+'</ul>';
+  if(state.history.length>30) h+='<p class="note">Показаны последние 30 из '+state.history.length+'. Полная история хранится в копии прогресса.</p>';
+  h+='</div>';
+
+  h+='<h2>Копия прогресса</h2><div class="card stack">';
+  h+='<p class="small muted" style="margin:0">Прогресс сохраняется автоматически в этом браузере. Чтобы перенести его на другой телефон или не потерять — сохрани копию, а потом восстанови её там.</p>';
+  h+='<button class="btn ghost" data-act="export">💾 Сохранить копию прогресса</button>';
+  h+='<div style="display:none"><p class="small muted" style="margin:0 0 6px">Если файл не скачался, скопируй этот текст и сохрани его (например, в «Заметках» или в избранном WhatsApp):</p><textarea id="exportBox" readonly></textarea><button class="btn ghost" data-act="copy-export" style="margin-top:8px">📋 Скопировать текст</button></div>';
+  h+='<label class="btn ghost file-lbl">📂 Восстановить из файла<input type="file" id="importFile" accept=".json,application/json,text/plain"></label>';
+  h+='<details><summary class="small" style="cursor:pointer;color:var(--g7);font-weight:700;padding:4px 2px">Вставить скопированный текст</summary><textarea id="importBox" placeholder="Вставь сюда текст копии"></textarea><button class="btn ghost" data-act="import-text" style="margin-top:8px">Восстановить из текста</button></details>';
+  h+='</div>';
+  h+='<div style="margin-top:22px"><button class="btn danger" data-act="reset">Начать всё сначала</button></div>';
+  return h;
+}
+
+/* ================== СОБЫТИЯ ================== */
+document.addEventListener('click',async e=>{
+  const t=e.target.closest('[data-act]');
+  if(!t) return;
+  const stop=e.target.closest('[data-stop]');
+  const act=t.dataset.act;
+  if(stop&&(act==='modal-no'||act==='modal-close')&&!t.closest('.sheet')) return;
+  if(stop&&t.classList.contains('modal-bg')) return;
+  switch(act){
+    case 'tab':case 'go': S=null;tab=t.dataset.tab;render();window.scrollTo(0,0);break;
+    case 'stage': closeModal();startStage(+t.dataset.n);window.scrollTo(0,0);break;
+    case 'ans': answer(+t.dataset.i);break;
+    case 'next': next();window.scrollTo(0,0);break;
+    case 'pause': quitSession();break;
+    case 'quit':{
+      const msg=S.kind==='stage'&&(S.stage===2||S.stage===3)?'Ответы и пройденные группы сохранены. Текущая группа при возвращении начнётся сначала.':'Ответы по буквам уже сохранены. Это занятие можно будет пройти заново в любой момент.';
+      if(await ask('Сделать перерыв?',msg,'Выйти','Продолжить занятие')) quitSession();
+      break;}
+    case 'daily': startPractice(dailyList(),'Повторение дня');window.scrollTo(0,0);break;
+    case 'letter': letterSheet(t.dataset.ch);break;
+    case 'practice-one': closeModal();startPractice([t.dataset.ch],'Буква '+q(BY[t.dataset.ch].name),{single:true,introAll:true});window.scrollTo(0,0);break;
+    case 'practice-list': {const list=[...t.dataset.list].filter(c=>BY[c]);startPractice(list,'Повторяем трудные буквы');window.scrollTo(0,0);break;}
+    case 'practice-review': {const rev=ALL.filter(c=>statusOf(c)==='review');startPractice(weightedPick(rev,Math.min(8,rev.length)),'Повторяем трудные буквы');window.scrollTo(0,0);break;}
+    case 'practice-new': {const nw=ALL.filter(c=>statusOf(c)==='new').slice(0,5);startPractice(nw,'Новые буквы');window.scrollTo(0,0);break;}
+    case 'modal-yes': closeModal(true);break;
+    case 'modal-no': case 'modal-close': if(e.target===t||!t.classList.contains('modal-bg')) closeModal(false);break;
+    case 'wa': t.href=waLink();break;
+    case 'export': tryDownload();break;
+    case 'copy-export':{
+      const ta=$('#exportBox');ta.select();
+      try{await navigator.clipboard.writeText(ta.value);toast('📋','Скопировано','Сохрани текст в надёжном месте.');}
+      catch(err){try{document.execCommand('copy');toast('📋','Скопировано','Сохрани текст в надёжном месте.');}catch(e2){toast('📋','Выдели текст','Скопируй его вручную.');}}
+      break;}
+    case 'import-text': importText(($('#importBox')||{}).value||'');break;
+    case 'reset':
+      if(await ask('Начать всё сначала?','Весь прогресс, звёзды и история на этом устройстве будут удалены. Если хочешь, сначала сохрани копию прогресса.','Да, начать сначала','Отмена',true)){
+        state=defaultState();save();toast('🌱','Чистый лист','Можно начинать заново.');tab='home';render();}
+      break;
+  }
+});
+document.addEventListener('change',e=>{
+  if(e.target.id==='importFile'&&e.target.files&&e.target.files[0]){
+    const r=new FileReader();r.onload=()=>importText(String(r.result));r.readAsText(e.target.files[0]);e.target.value='';
+  }
+});
+
+// Тестовый доступ для автоматической проверки
+window.__T={get S(){return S;},get state(){return state;},statusOf,LETTERS,buildReport};
+
+render();
+})();
+</script>
+</body>
+</html>
